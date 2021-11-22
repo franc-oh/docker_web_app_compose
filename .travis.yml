@@ -1,0 +1,16 @@
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - echo "start Creating an image with dockerfile"
+  - docker build -t franc/docker_web_app_compose -f dockerfile .
+
+script:
+  - docker run -e CI=true franc/docker_web_app_compose npm run test -- --coverage
+
+after_success:
+  - echo "Test Success!!"
